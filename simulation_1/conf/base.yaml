@@ -1,8 +1,0 @@
----
-num_round : 1
-num_clients : 4 
-val_ratio : 0.1
-train_batch_size : 20
-config_fit :
-  lr : 0.01
-  momentum : 0.9
