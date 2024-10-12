@@ -1,0 +1,28 @@
+[2024-10-12 17:45:47,866][flwr][INFO] - Starting Flower server, config: num_rounds=3, no round_timeout
+[2024-10-12 17:45:47,873][flwr][INFO] - Flower ECE: gRPC server running (3 rounds), SSL is disabled
+[2024-10-12 17:45:47,873][flwr][INFO] - [INIT]
+[2024-10-12 17:45:47,873][flwr][INFO] - Requesting initial parameters from one random client
+[2024-10-12 17:45:49,201][flwr][INFO] - Received initial parameters from one random client
+[2024-10-12 17:45:49,201][flwr][INFO] - Starting evaluation of initial global parameters
+[2024-10-12 17:45:51,042][flwr][INFO] - initial parameters (loss, other metrics): 720.9027614593506, {'accuracy': 0.1193}
+[2024-10-12 17:45:51,042][flwr][INFO] - 
+[2024-10-12 17:45:51,043][flwr][INFO] - [ROUND 1]
+[2024-10-12 17:45:51,043][flwr][INFO] - configure_fit: strategy sampled 1 clients (out of 2)
+[2024-10-12 17:45:51,051][flwr][INFO] - aggregate_fit: received 0 results and 1 failures
+[2024-10-12 17:45:52,366][flwr][INFO] - fit progress: (1, 720.9027614593506, {'accuracy': 0.1193}, 1.3236331999996764)
+[2024-10-12 17:45:52,367][flwr][INFO] - configure_evaluate: no clients selected, skipping evaluation
+[2024-10-12 17:45:52,367][flwr][INFO] - 
+[2024-10-12 17:45:52,367][flwr][INFO] - [ROUND 2]
+[2024-10-12 17:46:47,603][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/suppra/flower_env/lib/python3.12/site-packages/grpc/_server.py", line 654, in _take_response_from_response_iterator
+    return next(response_iterator), True
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suppra/flower_env/lib/python3.12/site-packages/flwr/server/superlink/fleet/grpc_bidi/flower_service_servicer.py", line 117, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suppra/flower_env/lib/python3.12/site-packages/flwr/server/superlink/fleet/grpc_bidi/grpc_bridge.py", line 165, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/suppra/flower_env/lib/python3.12/site-packages/flwr/server/superlink/fleet/grpc_bidi/grpc_bridge.py", line 81, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.superlink.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed

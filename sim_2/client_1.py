@@ -1,11 +1,12 @@
 from collections import OrderedDict
 from typing import Dict, Tuple
 import flwr as fl
+from flwr.common import Context
 import torch
 from flwr.common import NDArrays, Scalar
 from model import Net, test, train
 from torch.utils.data import DataLoader, random_split
-
+from torchvision.transforms import Compose, Normalize, ToTensor, ToPILImage
 
 class FlowerClient(fl.client.NumPyClient):
     """Define a Flower Client."""
@@ -36,35 +37,28 @@ class FlowerClient(fl.client.NumPyClient):
 
         return [val.cpu().numpy() for _, val in self.model.state_dict().items()]
 
-    def fit(self, parameters, config):
-        """Train model received by the server (parameters) using the data.
-
+    def fit(self, parameters, config : Dict[str, Scalar]):
+        """Train model received by the server (parameters) using the data
         that belongs to this client. Then, send it back to the server.
         """
 
         # copy parameters sent by the server into client's local model
         self.set_parameters(parameters)
 
-        # fetch elements in the config sent by the server. Note that having a config
-        # sent by the server each time a client needs to participate is a simple but
-        # powerful mechanism to adjust these hyperparameters during the FL process. For
-        # example, maybe you want clients to reduce their LR after a number of FL rounds.
-        # or you want clients to do more local epochs at later stages in the simulation
-        # you can control these by customising what you pass to `on_fit_config_fn` when
-        # defining your strategy.
         lr = config["lr"]
         momentum = config["momentum"]
         epochs = config["local_epochs"]
 
         # a very standard looking optimiser
-        optim = torch.optim.SGD(self.model.parameters(), lr=lr, momentum=momentum)
+        optim = torch.optim.SGD(self.model.parameters())
 
-        # do local training. This function is identical to what you might
-        # have used before in non-FL projects. For more advance FL implementation
-        # you might want to tweak it but overall, from a client perspective the "local
-        # training" can be seen as a form of "centralised training" given a pre-trained
-        # model (i.e. the model received from the server)
-        train(self.model, self.trainloader, optim, epochs, self.device)
+        train(net=self.model,
+              trainloader=self.trainloader,
+              lr=lr,
+              momentum=momentum,
+              optimizer=optim,
+              epochs=epochs,
+              device=self.device)
 
         # Flower clients need to return three arguments: the updated model, the number
         # of examples in the client (although this depends a bit on your choice of aggregation
@@ -79,15 +73,51 @@ class FlowerClient(fl.client.NumPyClient):
 
         return float(loss), len(self.valloader), {"accuracy": accuracy}
 
+
+# Creating new derived class of Dataset because can't apply transformations on non-built in datasets
+class TransformedDataset(torch.utils.data.Dataset):
+    def __init__(self, dataset, transform=None):
+        self.dataset = dataset
+        self.transform = transform
+
+    # will be used by random_split() function
+    def __len__(self):
+        return len(self.dataset)
+    
+    # method that's called when you try to access an item using indexing
+    # will be used by Dataloader during training to get the samples
+    def __getitem__(self, idx):
+        data, label = self.dataset[idx]  # Get the data and label from the dataset
+        if self.transform:                # Check if a transformation is provided
+            data = self.transform(data)   # Apply the transformation to the data
+        return data, label                # Return the transformed data and the original 
+
 # Extracting subdataset
-subset = torch.load('/home/suppra/Desktop/Flower/partitions/ds_1.pt')
+subset = torch.load('/home/suppra/Desktop/Flower/partitions/ds_1.pt', weights_only=False)
+
+# Applying transformations to the images like typecasting from uint8 to float32, and normalization
+tr = Compose([ToPILImage(), ToTensor(), Normalize((0.1307,), (0.3081,))])
+
+# Apply the transformation to your dataset
+transformed_dataset = TransformedDataset(subset, transform=tr)
 
 # Splitting into train and validation
-trainset, valset = random_split(subset, [0.9, 0.1])
+trainset, valset = random_split(transformed_dataset, [0.9, 0.1])
 
 # Creating dataloaders
-trainloader = DataLoader(trainset, batch_size = 32, num_workers = 5)
-valloader = DataLoader(valset, batch_size = 32, num_workers = 32)
+trainloader = DataLoader(trainset, batch_size = 32)
+valloader = DataLoader(valset, batch_size = 32)
 
-# Instantiating the client here
-client = FlowerClient(trainloader, valloader, 10)
+def client_fn(context: Context):
+    # Returns a normal FLowerClient that will use the dataloaders as it's local data.
+    return FlowerClient(
+        trainloader=trainloader,
+        valloader=valloader,
+        num_classes=10
+    ).to_client()
+
+
+fl.client.start_client(
+    server_address="localhost:8080",
+    client_fn=client_fn,
+)

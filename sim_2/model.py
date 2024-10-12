@@ -27,10 +27,8 @@ class Net(nn.Module):
         return x
 
 
-def train(net, trainloader, optimizer, epochs, device: str):
-    """Train the network on the training set.
-
-    This is a fairly simple training loop for PyTorch.
+def train(net, trainloader, lr, momentum, optimizer, epochs, device: str):
+    """Train the network on the training set.This is a fairly simple training loop for PyTorch.
     """
     criterion = torch.nn.CrossEntropyLoss()
     net.train()

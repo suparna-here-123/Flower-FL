@@ -1,0 +1,22 @@
+[2024-10-12 18:15:21,640][flwr][INFO] - Starting Flower server, config: num_rounds=20, no round_timeout
+[2024-10-12 18:15:21,645][flwr][INFO] - Flower ECE: gRPC server running (20 rounds), SSL is disabled
+[2024-10-12 18:15:21,645][flwr][INFO] - [INIT]
+[2024-10-12 18:15:21,645][flwr][INFO] - Requesting initial parameters from one random client
+[2024-10-12 18:15:22,046][flwr][INFO] - Received initial parameters from one random client
+[2024-10-12 18:15:22,046][flwr][INFO] - Starting evaluation of initial global parameters
+[2024-10-12 18:15:23,210][flwr][INFO] - initial parameters (loss, other metrics): 723.2087316513062, {'accuracy': 0.1037}
+[2024-10-12 18:15:23,210][flwr][INFO] - 
+[2024-10-12 18:15:23,210][flwr][INFO] - [ROUND 1]
+[2024-10-12 18:16:06,951][grpc._server][ERROR] - Exception iterating responses: 
+Traceback (most recent call last):
+  File "/home/suppra/flower_env/lib/python3.12/site-packages/grpc/_server.py", line 654, in _take_response_from_response_iterator
+    return next(response_iterator), True
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suppra/flower_env/lib/python3.12/site-packages/flwr/server/superlink/fleet/grpc_bidi/flower_service_servicer.py", line 117, in Join
+    ins_wrapper: InsWrapper = next(ins_wrapper_iterator)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/suppra/flower_env/lib/python3.12/site-packages/flwr/server/superlink/fleet/grpc_bidi/grpc_bridge.py", line 165, in ins_wrapper_iterator
+    self._raise_if_closed()
+  File "/home/suppra/flower_env/lib/python3.12/site-packages/flwr/server/superlink/fleet/grpc_bidi/grpc_bridge.py", line 81, in _raise_if_closed
+    raise GrpcBridgeClosed()
+flwr.server.superlink.fleet.grpc_bidi.grpc_bridge.GrpcBridgeClosed

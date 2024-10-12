@@ -70,9 +70,7 @@ def main(cfg: DictConfig):
         fraction_evaluate=0.0,  # similar to fraction_fit, we don't need to use this argument.
         min_evaluate_clients=cfg.num_clients_per_round_eval,  # number of clients to sample for evaluate()
         min_available_clients=cfg.num_clients,  # total clients in the simulation
-        on_fit_config_fn=get_on_fit_config(
-            cfg.config_fit
-        ),  # a function to execute to obtain the configuration to send to the clients during fit()
+        on_fit_config_fn=get_on_fit_config(cfg.config_fit),  # a function to execute to obtain the configuration to send to the clients during fit()
         evaluate_fn=get_evaluate_fn(cfg.num_classes, testloader),
     )  # a function to run on the server side to evaluate the global model.
 

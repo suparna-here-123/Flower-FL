@@ -1,0 +1,37 @@
+[2024-10-12 17:53:42,933][flwr][INFO] - Starting Flower server, config: num_rounds=3, no round_timeout
+[2024-10-12 17:53:42,939][flwr][INFO] - Flower ECE: gRPC server running (3 rounds), SSL is disabled
+[2024-10-12 17:53:42,940][flwr][INFO] - [INIT]
+[2024-10-12 17:53:42,940][flwr][INFO] - Requesting initial parameters from one random client
+[2024-10-12 17:53:43,399][flwr][INFO] - Received initial parameters from one random client
+[2024-10-12 17:53:43,399][flwr][INFO] - Starting evaluation of initial global parameters
+[2024-10-12 17:53:44,882][flwr][INFO] - initial parameters (loss, other metrics): 720.4549305438995, {'accuracy': 0.0956}
+[2024-10-12 17:53:44,883][flwr][INFO] - 
+[2024-10-12 17:53:44,883][flwr][INFO] - [ROUND 1]
+[2024-10-12 17:53:44,883][flwr][INFO] - configure_fit: strategy sampled 1 clients (out of 1)
+[2024-10-12 17:53:47,913][flwr][INFO] - aggregate_fit: received 1 results and 0 failures
+[2024-10-12 17:53:47,915][flwr][WARNING] - No fit_metrics_aggregation_fn provided
+[2024-10-12 17:53:49,047][flwr][INFO] - fit progress: (1, 717.8880314826965, {'accuracy': 0.0958}, 4.164467130998673)
+[2024-10-12 17:53:49,048][flwr][INFO] - configure_evaluate: no clients selected, skipping evaluation
+[2024-10-12 17:53:49,048][flwr][INFO] - 
+[2024-10-12 17:53:49,048][flwr][INFO] - [ROUND 2]
+[2024-10-12 17:53:49,048][flwr][INFO] - configure_fit: strategy sampled 1 clients (out of 1)
+[2024-10-12 17:53:52,099][flwr][INFO] - aggregate_fit: received 1 results and 0 failures
+[2024-10-12 17:53:53,216][flwr][INFO] - fit progress: (2, 714.8718645572662, {'accuracy': 0.1103}, 8.333249477998834)
+[2024-10-12 17:53:53,216][flwr][INFO] - configure_evaluate: no clients selected, skipping evaluation
+[2024-10-12 17:53:53,216][flwr][INFO] - 
+[2024-10-12 17:53:53,216][flwr][INFO] - [ROUND 3]
+[2024-10-12 17:53:53,217][flwr][INFO] - configure_fit: strategy sampled 1 clients (out of 1)
+[2024-10-12 17:53:56,318][flwr][INFO] - aggregate_fit: received 1 results and 0 failures
+[2024-10-12 17:53:57,482][flwr][INFO] - fit progress: (3, 710.6968398094177, {'accuracy': 0.1661}, 12.599203667999973)
+[2024-10-12 17:53:57,482][flwr][INFO] - configure_evaluate: no clients selected, skipping evaluation
+[2024-10-12 17:53:57,482][flwr][INFO] - 
+[2024-10-12 17:53:57,482][flwr][INFO] - [SUMMARY]
+[2024-10-12 17:53:57,483][flwr][INFO] - Run finished 3 round(s) in 12.60s
+[2024-10-12 17:53:57,483][flwr][INFO] - 	History (loss, centralized):
+[2024-10-12 17:53:57,483][flwr][INFO] - 		round 0: 720.4549305438995
+[2024-10-12 17:53:57,483][flwr][INFO] - 		round 1: 717.8880314826965
+[2024-10-12 17:53:57,483][flwr][INFO] - 		round 2: 714.8718645572662
+[2024-10-12 17:53:57,483][flwr][INFO] - 		round 3: 710.6968398094177
+[2024-10-12 17:53:57,483][flwr][INFO] - 	History (metrics, centralized):
+[2024-10-12 17:53:57,483][flwr][INFO] - 	{'accuracy': [(0, 0.0956), (1, 0.0958), (2, 0.1103), (3, 0.1661)]}
+[2024-10-12 17:53:57,483][flwr][INFO] - 
