@@ -54,7 +54,7 @@ def get_evaluate_fn(num_classes: int, testloader):
 
         # Logging the round number and accuracy ->
         with open("global_model_results.txt", 'a') as fh :
-            fh.write(f"{str(line_num)}\t{str(accuracy)}\n")
+            fh.write(f"{str(accuracy)}\n")
 
         # Report the loss and any other metric (inside a dictionary). In this case
         # we report the global test accuracy.

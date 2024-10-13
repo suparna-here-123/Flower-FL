@@ -7,4 +7,9 @@ This is to move away from the simulation methodologies.
 The server tests the aggregated global model on the MNIST test dataset.
 See /conf/base.yaml for hyperparameters and other variables.
 
-Accuracies over 20 training rounds can be viewed under /global_model_results.txt!
+## Simulation 2 : Version 2
+This real-life deployment has 1 server and 4 clients (2 each on 2 remote nodes).
+Data is loaded the same way as version 1.
+Keeping all model hyperparameters the same, a ~2% increase in accuracy is observed by increasing the number of clients participating from 2 to just 4!
+
+![Comparison Image](/sim_2/comparisons.png "Comparison between 2 and 4 clients in FL training process")
